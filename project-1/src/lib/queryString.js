@@ -11,6 +11,14 @@ module.exports.queryString = obj =>
 
 module.exports.parse = string => {
   return Object.fromEntries(
-    string.split('&').map(keyValue => keyValue.split('=')),
+    string.split('&').map(keyValue => {
+      let [key, value] = keyValue.split('=');
+
+      if (value.indexOf(',') !== -1) {
+        value = value.split(',');
+      }
+
+      return [key, value];
+    }),
   );
 };
