@@ -1,7 +1,7 @@
 import Cart, { Item } from './Cart';
 
 describe('Cart', () => {
-  let cart;
+  let cart: Cart;
 
   beforeEach(() => {
     cart = new Cart();
@@ -47,5 +47,31 @@ describe('Cart', () => {
     cart.add(item2);
 
     expect(cart.getTotal()).toEqual(35388);
+  });
+
+  it('should ensure no more thanm on product exists at a time', () => {
+    const product1 = {
+      product: {
+        title: 'Adidas Shoes',
+        price: 35388, //353.88 | R$ 353,88
+      },
+      quantity: 2,
+    } as Item;
+
+    const product2 = {
+      product: {
+        title: 'Adidas Shoes Women',
+        price: 41872, //353.88 | R$ 353,88
+      },
+      quantity: 1,
+    } as Item;
+
+    cart.add(product1);
+
+    cart.add(product2);
+
+    cart.remove(product1);
+
+    expect(cart.getTotal()).toEqual(41872);
   });
 });

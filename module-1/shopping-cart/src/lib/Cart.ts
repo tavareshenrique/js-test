@@ -20,6 +20,10 @@ export default class Cart {
     this.items.push(item);
   }
 
+  remove(item: Item) {
+    remove(this.items, { product: item.product });
+  }
+
   getTotal() {
     return this.items.reduce(
       (acc, item) => acc + item.product.price * item.quantity,
