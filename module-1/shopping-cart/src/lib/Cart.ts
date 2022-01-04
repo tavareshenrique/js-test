@@ -30,4 +30,11 @@ export default class Cart {
       0,
     );
   }
+
+  checkout() {
+    return {
+      total: this.getTotal(),
+      items: this.items,
+    };
+  }
 }

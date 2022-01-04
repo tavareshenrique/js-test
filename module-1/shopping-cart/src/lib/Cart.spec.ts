@@ -7,71 +7,119 @@ describe('Cart', () => {
     cart = new Cart();
   });
 
-  it('should return 0 when getTotal() is executed in a newly created instance', () => {
-    expect(cart.getTotal()).toEqual(0);
+  describe('getTotal()', () => {
+    it('should return 0 when getTotal() is executed in a newly created instance', () => {
+      expect(cart.getTotal()).toEqual(0);
+    });
+
+    it('should multiply quantity and price and receive the total amount', () => {
+      const item = {
+        product: {
+          title: 'Adidas Shoes',
+          price: 35388, //353.88 | R$ 353,88
+        },
+        quantity: 2,
+      } as Item;
+
+      cart.add(item);
+
+      expect(cart.getTotal()).toEqual(70776);
+    });
+
+    it('should ensure no more than on product exists at a time', () => {
+      const item1 = {
+        product: {
+          title: 'Adidas Shoes',
+          price: 35388, //353.88 | R$ 353,88
+        },
+        quantity: 2,
+      } as Item;
+
+      cart.add(item1);
+
+      const item2 = {
+        product: {
+          title: 'Adidas Shoes',
+          price: 35388, //353.88 | R$ 353,88
+        },
+        quantity: 1,
+      } as Item;
+
+      cart.add(item2);
+
+      expect(cart.getTotal()).toEqual(35388);
+    });
+
+    it('should ensure no more thanm on product exists at a time', () => {
+      const product1 = {
+        product: {
+          title: 'Adidas Shoes',
+          price: 35388, //353.88 | R$ 353,88
+        },
+        quantity: 2,
+      } as Item;
+
+      const product2 = {
+        product: {
+          title: 'Adidas Shoes Women',
+          price: 41872, //353.88 | R$ 353,88
+        },
+        quantity: 1,
+      } as Item;
+
+      cart.add(product1);
+
+      cart.add(product2);
+
+      cart.remove(product1);
+
+      expect(cart.getTotal()).toEqual(41872);
+    });
   });
 
-  it('should multiply quantity and price and receive the total amount', () => {
-    const item = {
-      product: {
-        title: 'Adidas Shoes',
-        price: 35388, //353.88 | R$ 353,88
-      },
-      quantity: 2,
-    } as Item;
+  describe('checkout', () => {
+    it('should return object with the total and the list of items', () => {
+      const product1 = {
+        product: {
+          title: 'Adidas Shoes',
+          price: 35388, //353.88 | R$ 353,88
+        },
+        quantity: 2,
+      } as Item;
 
-    cart.add(item);
+      const product2 = {
+        product: {
+          title: 'Adidas Shoes Women',
+          price: 41872, //353.88 | R$ 353,88
+        },
+        quantity: 3,
+      } as Item;
 
-    expect(cart.getTotal()).toEqual(70776);
-  });
+      cart.add(product1);
 
-  it('should ensure no more than on product exists at a time', () => {
-    const item1 = {
-      product: {
-        title: 'Adidas Shoes',
-        price: 35388, //353.88 | R$ 353,88
-      },
-      quantity: 2,
-    } as Item;
+      cart.add(product2);
 
-    cart.add(item1);
-
-    const item2 = {
-      product: {
-        title: 'Adidas Shoes',
-        price: 35388, //353.88 | R$ 353,88
-      },
-      quantity: 1,
-    } as Item;
-
-    cart.add(item2);
-
-    expect(cart.getTotal()).toEqual(35388);
-  });
-
-  it('should ensure no more thanm on product exists at a time', () => {
-    const product1 = {
-      product: {
-        title: 'Adidas Shoes',
-        price: 35388, //353.88 | R$ 353,88
-      },
-      quantity: 2,
-    } as Item;
-
-    const product2 = {
-      product: {
-        title: 'Adidas Shoes Women',
-        price: 41872, //353.88 | R$ 353,88
-      },
-      quantity: 1,
-    } as Item;
-
-    cart.add(product1);
-
-    cart.add(product2);
-
-    cart.remove(product1);
-
-    expect(cart.getTotal()).toEqual(41872);
+      expect(cart.checkout()).toMatchInlineSnapshot(`
+        Object {
+          "items": Array [
+            Object {
+              "product": Object {
+                "price": 35388,
+                "title": "Adidas Shoes",
+              },
+              "quantity": 2,
+            },
+            Object {
+              "product": Object {
+                "price": 41872,
+                "title": "Adidas Shoes Women",
+              },
+              "quantity": 3,
+            },
+          ],
+          "total": 196392,
+        }
+      `);
+    });
   });
 });
