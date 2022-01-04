@@ -121,5 +121,66 @@ describe('Cart', () => {
         }
       `);
     });
+
+    it('should return object with the total and the list of items when summary() is called', () => {
+      const product1 = {
+        product: {
+          title: 'Adidas Shoes',
+          price: 35388, //353.88 | R$ 353,88
+        },
+        quantity: 2,
+      } as Item;
+
+      const product2 = {
+        product: {
+          title: 'Adidas Shoes Women',
+          price: 41872, //353.88 | R$ 353,88
+        },
+        quantity: 3,
+      } as Item;
+
+      cart.add(product1);
+
+      cart.add(product2);
+
+      expect(cart.getTotal()).toBeGreaterThan(0);
+      expect(cart.summary()).toMatchInlineSnapshot(`
+        Object {
+          "items": Array [
+            Object {
+              "product": Object {
+                "price": 35388,
+                "title": "Adidas Shoes",
+              },
+              "quantity": 2,
+            },
+            Object {
+              "product": Object {
+                "price": 41872,
+                "title": "Adidas Shoes Women",
+              },
+              "quantity": 3,
+            },
+          ],
+          "total": 196392,
+        }
+      `);
+    });
+
+    it('should reset cart when checkout() is called', () => {
+      const product2 = {
+        product: {
+          title: 'Adidas Shoes Women',
+          price: 41872, //353.88 | R$ 353,88
+        },
+        quantity: 3,
+      } as Item;
+
+      cart.add(product2);
+
+      cart.checkout();
+
+      expect(cart.getTotal()).toEqual(0);
+    });
   });
 });
