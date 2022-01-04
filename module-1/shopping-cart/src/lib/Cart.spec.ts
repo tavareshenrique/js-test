@@ -24,4 +24,28 @@ describe('Cart', () => {
 
     expect(cart.getTotal()).toEqual(70776);
   });
+
+  it('should ensure no more than on product exists at a time', () => {
+    const item1 = {
+      product: {
+        title: 'Adidas Shoes',
+        price: 35388, //353.88 | R$ 353,88
+      },
+      quantity: 2,
+    } as Item;
+
+    cart.add(item1);
+
+    const item2 = {
+      product: {
+        title: 'Adidas Shoes',
+        price: 35388, //353.88 | R$ 353,88
+      },
+      quantity: 1,
+    } as Item;
+
+    cart.add(item2);
+
+    expect(cart.getTotal()).toEqual(35388);
+  });
 });
