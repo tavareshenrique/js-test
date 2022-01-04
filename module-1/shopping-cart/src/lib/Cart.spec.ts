@@ -183,4 +183,26 @@ describe('Cart', () => {
       expect(cart.getTotal().getAmount()).toEqual(0);
     });
   });
+
+  describe('special conditions', () => {
+    it('should apply percentage discount quantity above minimum is passed', () => {
+      const condition = {
+        percentage: 30,
+        minimum: 2,
+      };
+
+      const product1 = {
+        product: {
+          title: 'Adidas Shoes',
+          price: 35388, //353.88 | R$ 353,88
+        },
+        condition,
+        quantity: 3,
+      } as Item;
+
+      cart.add(product1);
+
+      expect(cart.getTotal().getAmount()).toEqual(74315);
+    });
+  });
 });
