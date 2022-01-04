@@ -7,9 +7,9 @@ describe('Cart', () => {
     cart = new Cart();
   });
 
-  describe('getTotal()', () => {
-    it('should return 0 when getTotal() is executed in a newly created instance', () => {
-      expect(cart.getTotal()).toEqual(0);
+  describe('getTotal().getAmount()', () => {
+    it('should return 0 when getTotal().getAmount() is executed in a newly created instance', () => {
+      expect(cart.getTotal().getAmount()).toEqual(0);
     });
 
     it('should multiply quantity and price and receive the total amount', () => {
@@ -23,7 +23,7 @@ describe('Cart', () => {
 
       cart.add(item);
 
-      expect(cart.getTotal()).toEqual(70776);
+      expect(cart.getTotal().getAmount()).toEqual(70776);
     });
 
     it('should ensure no more than on product exists at a time', () => {
@@ -47,7 +47,7 @@ describe('Cart', () => {
 
       cart.add(item2);
 
-      expect(cart.getTotal()).toEqual(35388);
+      expect(cart.getTotal().getAmount()).toEqual(35388);
     });
 
     it('should ensure no more thanm on product exists at a time', () => {
@@ -73,11 +73,11 @@ describe('Cart', () => {
 
       cart.remove(product1);
 
-      expect(cart.getTotal()).toEqual(41872);
+      expect(cart.getTotal().getAmount()).toEqual(41872);
     });
   });
 
-  describe('checkout', () => {
+  describe('checkout()', () => {
     it('should return object with the total and the list of items', () => {
       const product1 = {
         product: {
@@ -143,7 +143,7 @@ describe('Cart', () => {
 
       cart.add(product2);
 
-      expect(cart.getTotal()).toBeGreaterThan(0);
+      expect(cart.getTotal().getAmount()).toBeGreaterThan(0);
       expect(cart.summary()).toMatchInlineSnapshot(`
         Object {
           "items": Array [
@@ -180,7 +180,7 @@ describe('Cart', () => {
 
       cart.checkout();
 
-      expect(cart.getTotal()).toEqual(0);
+      expect(cart.getTotal().getAmount()).toEqual(0);
     });
   });
 });
