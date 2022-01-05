@@ -30,8 +30,10 @@ export default class Cart {
   }
 
   _calculateQuantityDiscount(amount: Dinero, item: Item) {
+    const isEven = item.quantity % 2 === 0;
+
     if (item.condition && item.quantity > item.condition.quantity) {
-      return amount.percentage(50);
+      return amount.percentage(isEven ? 50 : 40);
     }
 
     return Money({ amount: 0 });

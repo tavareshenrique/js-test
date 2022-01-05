@@ -223,5 +223,63 @@ describe('Cart', () => {
 
       expect(cart.getTotal().getAmount()).toEqual(70776);
     });
+
+    it('should apply quantity discount for odd quantities', () => {
+      const condition = {
+        quantity: 2,
+      };
+
+      const product1 = {
+        product: {
+          title: 'Adidas Shoes',
+          price: 35388, //353.88 | R$ 353,88
+        },
+        condition,
+        quantity: 5,
+      } as Item;
+
+      cart.add(product1);
+
+      expect(cart.getTotal().getAmount()).toEqual(106164);
+    });
+
+    it('should NOT apply percentage discount quantity is below or equals minimum', () => {
+      const condition = {
+        percentage: 30,
+        minimum: 2,
+      };
+
+      const product1 = {
+        product: {
+          title: 'Adidas Shoes',
+          price: 35388, //353.88 | R$ 353,88
+        },
+        condition,
+        quantity: 2,
+      } as Item;
+
+      cart.add(product1);
+
+      expect(cart.getTotal().getAmount()).toEqual(70776);
+    });
+
+    it('should NOT apply quantity discount for even quantities when condition is not minimum', () => {
+      const condition = {
+        quantity: 2,
+      };
+
+      const product1 = {
+        product: {
+          title: 'Adidas Shoes',
+          price: 35388, //353.88 | R$ 353,88
+        },
+        condition,
+        quantity: 1,
+      } as Item;
+
+      cart.add(product1);
+
+      expect(cart.getTotal().getAmount()).toEqual(35388);
+    });
   });
 });
