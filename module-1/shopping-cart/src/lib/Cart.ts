@@ -36,6 +36,7 @@ export default class Cart {
   }
 
   _calculateQuantityDiscount(amount: Dinero, item: ItemProps) {
+    // debugger;
     const isEven = item.quantity % 2 === 0;
 
     if (item.condition && item.quantity > item.condition.quantity) {
