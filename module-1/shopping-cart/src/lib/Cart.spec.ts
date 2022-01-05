@@ -281,5 +281,29 @@ describe('Cart', () => {
 
       expect(cart.getTotal().getAmount()).toEqual(35388);
     });
+
+    it('should receive two or more conditions and determine/apply the best discount. First case.', () => {
+      const condition1 = {
+        percentage: 30,
+        minimum: 2,
+      };
+
+      const condition2 = {
+        quantity: 2,
+      };
+
+      const product1 = {
+        product: {
+          title: 'Adidas Shoes',
+          price: 35388, //353.88 | R$ 353,88
+        },
+        condition: [condition1, condition2],
+        quantity: 4,
+      } as Item;
+
+      cart.add(product1);
+
+      expect(cart.getTotal().getAmount()).toEqual(70776);
+    });
   });
 });

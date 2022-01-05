@@ -5,23 +5,29 @@ import Money, { Dinero } from 'dinero.js';
 Money.defaultCurrency = 'BRL';
 Money.defaultPrecision = 2;
 
+type Condition = {
+  percentage: number;
+  minimum: number;
+  quantity?: number;
+};
+
 export interface Item {
   product: {
     title: string;
     price: number;
   };
   quantity: number;
-  condition?: {
-    percentage: number;
-    minimum: number;
-    quantity?: number;
-  };
+  condition?: Condition | Condition[];
+}
+
+export interface ItemProps extends Omit<Item, 'product'> {
+  condition?: Condition;
 }
 
 export default class Cart {
   items: Item[] = [];
 
-  _calculatePercentageDiscount(amount: Dinero, item: Item) {
+  _calculatePercentageDiscount(amount: Dinero, item: ItemProps) {
     if (item.condition && item.quantity > item.condition.minimum) {
       return amount.percentage(item.condition.percentage);
     }
@@ -29,7 +35,7 @@ export default class Cart {
     return Money({ amount: 0 });
   }
 
-  _calculateQuantityDiscount(amount: Dinero, item: Item) {
+  _calculateQuantityDiscount(amount: Dinero, item: ItemProps) {
     const isEven = item.quantity % 2 === 0;
 
     if (item.condition && item.quantity > item.condition.quantity) {
@@ -37,6 +43,32 @@ export default class Cart {
     }
 
     return Money({ amount: 0 });
+  }
+
+  _calculateDiscount(
+    amount: Dinero,
+    quantity: number,
+    condition: Condition | Condition[],
+  ) {
+    const list = Array.isArray(condition) ? condition : [condition];
+
+    const [higherDiscount] = list
+      .map(listCondition => {
+        if (listCondition.percentage) {
+          return this._calculatePercentageDiscount(amount, {
+            condition: listCondition,
+            quantity,
+          }).getAmount();
+        } else {
+          return this._calculateQuantityDiscount(amount, {
+            condition: listCondition,
+            quantity,
+          }).getAmount();
+        }
+      })
+      .sort((a, b) => b - a);
+
+    return Money({ amount: higherDiscount });
   }
 
   add(item: Item) {
@@ -57,13 +89,21 @@ export default class Cart {
 
       let discount = Money({ amount: 0 });
 
-      if (item.condition && item.condition.percentage) {
-        discount = this._calculatePercentageDiscount(amount, item);
+      if (item.condition) {
+        discount = this._calculateDiscount(
+          amount,
+          item.quantity,
+          item.condition,
+        );
       }
 
-      if (item.condition && item.condition.quantity) {
-        discount = this._calculateQuantityDiscount(amount, item);
-      }
+      // if (item.condition && item.condition.percentage) {
+      //   discount = this._calculatePercentageDiscount(amount, item);
+      // }
+
+      // if (item.condition && item.condition.quantity) {
+      //   discount = this._calculateQuantityDiscount(amount, item);
+      // }
 
       return acc.add(amount).subtract(discount);
     }, Money({ amount: 0 }));
