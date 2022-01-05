@@ -204,5 +204,24 @@ describe('Cart', () => {
 
       expect(cart.getTotal().getAmount()).toEqual(74315);
     });
+
+    it('should apply quantity discount for even quantities', () => {
+      const condition = {
+        quantity: 2,
+      };
+
+      const product1 = {
+        product: {
+          title: 'Adidas Shoes',
+          price: 35388, //353.88 | R$ 353,88
+        },
+        condition,
+        quantity: 4,
+      } as Item;
+
+      cart.add(product1);
+
+      expect(cart.getTotal().getAmount()).toEqual(70776);
+    });
   });
 });
