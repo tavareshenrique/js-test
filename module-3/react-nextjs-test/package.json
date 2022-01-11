@@ -15,13 +15,14 @@
     "start": "next start"
   },
   "dependencies": {
-    "@tailwindcss/ui": "0.7.2",
+    "autoprefixer": "^10.4.2",
     "axios": "0.22.0",
     "immer": "9.0.6",
     "next": "11.1.2",
+    "postcss": "^8.4.5",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "tailwindcss": "2.2.16",
+    "tailwindcss": "^3.0.13",
     "zustand": "3.5.12"
   },
   "devDependencies": {
