@@ -51,7 +51,25 @@ describe('<CartItem />', () => {
     expect(screen.getByTestId('quantity').textContent).toEqual('2');
   })
 
-  it.todo('should decrease quantity by 1 when first button is clicked')
+  it.skip('should decrease quantity by 1 when first button is clicked', () => {
+    renderCartItem();
 
-  it.todo('should not go below zero in the quantity')
+    const decreaseButton = screen.getByTestId('decrease');
+
+    userEvent.click(decreaseButton);
+
+    expect(screen.getByTestId('quantity').textContent).toEqual('0');
+  })
+
+  it.skip('should not go below zero in the quantity', () => {
+    renderCartItem();
+
+    const decreaseButton = screen.getByTestId('decrease');
+
+    userEvent.click(decreaseButton);
+    userEvent.click(decreaseButton);
+    userEvent.click(decreaseButton);
+
+    expect(screen.getByTestId('quantity').textContent).toEqual('0');
+  })
 })
