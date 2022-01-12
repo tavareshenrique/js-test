@@ -1,6 +1,6 @@
-import ProductCard from './product-card';
 import { fireEvent, render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+
+import ProductCard from './product-card';
 
 const product = {
   title: 'Relógio',
