@@ -34,14 +34,17 @@ export const useCartStore = create((set) => {
           }
         });
       },
-      increase(product) {
+      increase(product) {      
         setState(({ state }) => {
           const localProduct = state.products.find(
             ({ id }) => id === product.id,
           );
+
           if (localProduct) {
             localProduct.quantity++;
           }
+
+          console.log(localProduct)
         });
       },
       decrease(product) {
