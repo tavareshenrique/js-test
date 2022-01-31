@@ -42,6 +42,17 @@ describe('Cart Store', () => {
     expect(result.current.state.products).toHaveLength(2);
   });
 
+  it('should not add same product twice', () => {
+    const product = server.create('product');
+
+    const { actions: { add } } = result.current;
+
+    act(() => add(product));
+    act(() => add(product));
+
+    expect(result.current.state.products).toHaveLength(1);
+  })
+
   it('should toggle open state', () => {
     const { actions: { toggle } } = result.current;
 
