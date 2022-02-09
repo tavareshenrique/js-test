@@ -41,14 +41,16 @@ describe('<CartItem />', () => {
     expect(screen.getByTestId('quantity').textContent).toEqual('1');
   })
 
-  it.skip('should increase quantity by 1 when second button is clicked', async () => {
+  it.skip('should increase quantity by 1 when second button is clicked', () => {
     renderCartItem();
 
     const increaseButton = screen.getByTestId('increase');
 
-    userEvent.click(increaseButton);
+    screen.debug(increaseButton);
 
-    expect(screen.getByTestId('quantity').textContent).toEqual('2');
+    // fireEvent.click(increaseButton);
+
+    // expect(screen.getByTestId('quantity').textContent).toEqual('2');
   })
 
   it.skip('should decrease quantity by 1 when first button is clicked', () => {
