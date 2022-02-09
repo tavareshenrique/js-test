@@ -40,13 +40,9 @@ export const useCartStore = create((set) => {
             ({ id }) => id === product.id,
           );
 
-          console.log('state', state)
-
           if (localProduct) {
             localProduct.quantity++;
           }
-
-          console.log('local', localProduct)
         });
       },
       decrease(product) {

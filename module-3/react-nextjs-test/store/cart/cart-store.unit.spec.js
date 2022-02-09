@@ -43,6 +43,58 @@ describe('Cart Store', () => {
     expect(result.current.state.open).toBe(true);
   });
 
+  it('should assign 1 as initial quntity on product add()', async () => {
+    const product = server.create('product');
+
+    const { actions: { add } } = result.current;
+
+    act(() => {
+      add(product);
+    })
+
+    expect(result.current.state.products[0].quantity).toBe(1);
+  });
+
+  it('should increase quantity', () => {
+    const product = server.create('product');
+
+    const { actions: { add, increase } } = result.current;
+
+    act(() => {
+      add(product);
+      increase(product);
+    })
+
+    expect(result.current.state.products[0].quantity).toBe(2);
+  })
+
+  it('should decrease quantity', () => {
+    const product = server.create('product');
+
+    const { actions: { add, decrease } } = result.current;
+
+    act(() => {
+      add(product);
+      decrease(product);
+    })
+
+    expect(result.current.state.products[0].quantity).toBe(0);
+  })
+
+  it('should NOT decrease below zero', () => {
+    const product = server.create('product');
+
+    const { actions: { add, decrease } } = result.current;
+
+    act(() => {
+      add(product);
+      decrease(product);
+      decrease(product);
+    })
+
+    expect(result.current.state.products[0].quantity).toBe(0);
+  })
+
   it('should not add same product twice', () => {
     const product = server.create('product');
 
