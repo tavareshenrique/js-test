@@ -1,7 +1,13 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import { renderHook } from '@testing-library/react-hooks';
 import userEvent from '@testing-library/user-event';
+import { setAutoFreeze } from 'immer'
+;
+import { useCartStore } from '../store/cart';
 
 import CartItem from './cart-item';
+
+setAutoFreeze(false);
 
 const product = {
   id: 1,
@@ -10,6 +16,7 @@ const product = {
   image: 'https://images.unsplash.com/photo-1495856458515-0637185db551?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80',
   quantity: 1
 }
+
 
 const renderCartItem = () => {
   render(<CartItem product={product} />);
@@ -73,5 +80,20 @@ describe('<CartItem />', () => {
     userEvent.click(decreaseButton);
 
     expect(screen.getByTestId('quantity').textContent).toEqual('0');
+  })
+
+  it('should call remove() when remove button is clicked', async () => {
+    const result = renderHook(() => useCartStore()).result;
+
+    const spy = jest.spyOn(result.current.actions, 'remove');
+
+    renderCartItem();
+
+    const button = screen.getByRole('button', {  name: /remove/i });
+
+    await userEvent.click(button);
+
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenCalledWith(product);
   })
 })
