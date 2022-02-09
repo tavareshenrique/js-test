@@ -89,7 +89,7 @@ describe('Cart Store', () => {
     expect(result.current.state.products[0]).toEqual(product2);
   });
 
-  fit('should not change products in the cart if provided is not in the array', () => {
+  it('should not change products in the cart if provided is not in the array', () => {
     const [product1, product2, product3] = server.createList('product', 3);
 
     const { actions: { add, remove } } = result.current;
