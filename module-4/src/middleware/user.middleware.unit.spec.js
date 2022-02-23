@@ -1,22 +1,23 @@
 import { appError } from '@/utils';
 import { ReasonPhrases, StatusCodes } from 'http-status-codes';
 import * as service from '@/database/service';
+import { buildError, buildNext, buildReq } from 'test/builders';
 import { get } from './user.middleware';
 
 jest.mock('@/database/service');
 
 describe('Middlewares > User', () => {
+  const error = buildError(StatusCodes.UNPROCESSABLE_ENTITY, `${ReasonPhrases.UNPROCESSABLE_ENTITY}: header should contain a valid email`);
+
   afterEach(() => {
     jest.clearAllMocks();
   });
 
   it('should foward an error when an email is NOT provided in the headers', () => {
-    const req = { headers: {} };
-    const next = jest.fn().mockName('next');
-    const error = appError(
-      `${ReasonPhrases.UNPROCESSABLE_ENTITY}: header should contain a valid email`,
-      StatusCodes.UNPROCESSABLE_ENTITY,
-    );
+    const req = buildReq({
+      headers: {},
+    });
+    const next = buildNext();
 
     get(req, null, next);
 
@@ -26,16 +27,13 @@ describe('Middlewares > User', () => {
   });
 
   it('should foward an error when an email is provided in the headers but is invalid', () => {
-    const req = {
+    const req = buildReq({
       headers: {
         email: 'invalid-email',
       }
-    };
-    const next = jest.fn().mockName('next');
-    const error = appError(
-      `${ReasonPhrases.UNPROCESSABLE_ENTITY}: header should contain a valid email`,
-      StatusCodes.UNPROCESSABLE_ENTITY,
-    );
+    });
+
+    const next = buildNext();
 
     get(req, null, next);
 
@@ -45,23 +43,23 @@ describe('Middlewares > User', () => {
   });
 
   it('should return an user object given a valid email is provided', async () => {
-    const email = 'ihenrits@gmail.com';
+    // Arrange
+    const req = buildReq();
+    const next = buildNext();
 
-    const req = {
-      headers: {
-        email,
-      }
+    const { email } = req.headers;
+
+    const resolved = {
+      id: 1,
+      email,
     };
 
-    const next = jest.fn().mockName('next');
+    jest.spyOn(service, 'findOrSave').mockResolvedValue([ resolved ]);
 
-    jest.spyOn(service, 'findOrSave').mockResolvedValue([ {
-      id: 1,
-      email
-    } ]);
-
+    // Act
     await get(req, null, next);
 
+    // Assert
     expect(req.user).toBeDefined();
     expect(req.user).toEqual({
       id: 1,
@@ -72,15 +70,10 @@ describe('Middlewares > User', () => {
   });
 
   it('should return an error when servicec findOrSave fails', async () => {
-    const email = 'ihenrits@gmail.com';
+    const req = buildReq();
+    const next = buildNext();
 
-    const req = {
-      headers: {
-        email,
-      }
-    };
-
-    const next = jest.fn().mockName('next');
+    delete req.user;
 
     jest.spyOn(service, 'findOrSave').mockRejectedValueOnce('findOrSave failed');
 
