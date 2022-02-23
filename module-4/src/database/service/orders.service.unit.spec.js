@@ -2,9 +2,11 @@
 import { buildError, buildOrders, buildUser } from 'test/builders';
 import { Order } from '@/database/models/order.model';
 import { StatusCodes } from 'http-status-codes';
-import { listOrders } from './orders.service';
+import { logger } from '@/utils/logger';
+import { listOrders, saveOrder } from './orders.service';
 
 jest.mock('@/database/models/order.model');
+jest.mock('@/utils/logger');
 JSON.parse = jest.fn();
 
 describe('Service > Orders', () => {
@@ -35,12 +37,36 @@ describe('Service > Orders', () => {
     expect(JSON.parse).toHaveBeenCalledTimes(orders.length);
   });
 
-  it('should reject with an error when Order.findAll() fails', async () => {
+  it('should reject with an error when Order.findAll() fails', () => {
     const user = buildUser();
     const error = buildError(StatusCodes.INTERNAL_SERVER_ERROR, 'Failed to retrieve orders for user: 111');
 
     jest.spyOn(Order, 'findAll').mockRejectedValueOnce(error);
 
-    await expect(listOrders(user.id)).rejects.toEqual(error);
+    expect(listOrders(user.id)).rejects.toEqual(error);
+  });
+
+  it('should save and return order', () => {
+    const user = buildUser();
+    const data = {
+      userid: user.id,
+      products: buildOrders()
+    };
+    const order = {
+      ...data,
+      id: 1,
+    };
+
+    jest.spyOn(Order, 'create').mockResolvedValueOnce(order);
+
+    expect(saveOrder(data)).resolves.toEqual(order);
+    expect(logger.info).toHaveBeenCalledTimes(1);
+    expect(logger.info).toHaveBeenCalledWith('New order saved', { data });
+  });
+
+  it('should reject with an error when saveOrder is executed without any data', () => {
+    const error = buildError(StatusCodes.INTERNAL_SERVER_ERROR, 'Failed to save order');
+
+    expect(saveOrder()).rejects.toEqual(error);
   });
 });
