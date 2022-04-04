@@ -1,19 +1,18 @@
 <p align="center">
-   <img src="https://raw.githubusercontent.com/tavareshenrique/js-ts-tests/main/assets/icon.png" alt="JS Logo" width="120" />
-   
+   <img src="https://raw.githubusercontent.com/tavareshenrique/js-ts-tests/main/assets/logo.png" alt="JS Logo" width="280"/>
 </p>
 
 <p align="center">
    <a href="https://www.linkedin.com/in/tavareshenrique/">
       <img alt="Henrique Tavares" src="https://img.shields.io/badge/-Henrique Tavares-FDD83C?style=flat&logo=Linkedin&logoColor=white" />
    </a>
- <img alt="Repository size" src="https://img.shields.io/github/repo-size/tavareshenrique/js-ts-tests?color=68e090">
+ <img alt="Repository size" src="https://img.shields.io/github/repo-size/tavareshenrique/js-ts-tests?color=FDD83C">
 
   <a aria-label="Last Commit" href="https://github.com/tavareshenrique/js-ts-tests/commits/master">
     <img alt="Last commit on GitHub" src="https://img.shields.io/github/last-commit/tavareshenrique/js-ts-tests?color=FDD83C">
   </a>
   <a href="https://github.com/tavareshenrique/js-ts-tests/commits/master">
-    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/tavareshenrique/js-ts-tests?color=68e090">
+    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/tavareshenrique/js-ts-tests?color=FDD83C">
   </a>
 </p>
 

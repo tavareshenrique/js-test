@@ -1,3 +1,7 @@
+<p align="center">
+   <img src="https://raw.githubusercontent.com/tavareshenrique/js-ts-tests/main/assets/icon.png" alt="Frasco de Teste" width="140"/>
+</p>
+
 > O <b>módulo 1</b> consiste em um projeto simples para testar aplicações utilizando <b>Vanilla JavaScript.</b>
 
 # :pushpin: Conteúdo
