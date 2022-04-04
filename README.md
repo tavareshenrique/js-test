@@ -1,18 +1,19 @@
 <p align="center">
-   <img src="https://raw.githubusercontent.com/tavareshenrique/js-ts-tests/main/assets/logo.png" alt="JS Logo" width="280"/>
+   <img src="https://raw.githubusercontent.com/tavareshenrique/js-ts-tests/main/assets/icon.png" alt="JS Logo" width="120" />
+   
 </p>
 
 <p align="center">
    <a href="https://www.linkedin.com/in/tavareshenrique/">
       <img alt="Henrique Tavares" src="https://img.shields.io/badge/-Henrique Tavares-FDD83C?style=flat&logo=Linkedin&logoColor=white" />
    </a>
- <img alt="Repository size" src="https://img.shields.io/github/repo-size/tavareshenrique/js-ts-tests?color=FDD83C">
+ <img alt="Repository size" src="https://img.shields.io/github/repo-size/tavareshenrique/js-ts-tests?color=68e090">
 
   <a aria-label="Last Commit" href="https://github.com/tavareshenrique/js-ts-tests/commits/master">
     <img alt="Last commit on GitHub" src="https://img.shields.io/github/last-commit/tavareshenrique/js-ts-tests?color=FDD83C">
   </a>
   <a href="https://github.com/tavareshenrique/js-ts-tests/commits/master">
-    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/tavareshenrique/js-ts-tests?color=FDD83C">
+    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/tavareshenrique/js-ts-tests?color=68e090">
   </a>
 </p>
 
@@ -21,7 +22,7 @@
 # :pushpin: Conteúdo
 
 - [Tecnologias](#computer-tecnologias)
-- [Módulos](#pushpin-módulos)
+- [Módulos](#paperclip-módulos)
   - [Módulo 1](#módulo-1)
   - [Módulo 3](#módulo-3)
   - [Módulo 4](#módulo-4)
@@ -48,7 +49,7 @@ Este projeto foi feito utilizando as seguintes tecnologias:
 - [ESLint](https://eslint.org/)
 - [Prettier](https://prettier.io/)
 
-# :pushpin: Módulos
+# :paperclip: Módulos
 
 ## [Módulo 1](https://github.com/tavareshenrique/js-ts-tests/tree/main/module-1)
 Projeto simples para testar aplicações utilizando **Vanilla JavaScript.**
