@@ -23,8 +23,8 @@
 - [Tecnologias](#computer-tecnologias)
 - [Módulos](#pushpin-módulos)
   - [Módulo 1](#módulo-1)
-  - [Módulo 3](#modulo-3)
-  - [Módulo 4](#modulo-4)
+  - [Módulo 3](#módulo-3)
+  - [Módulo 4](#módulo-4)
 - [Autores](#computer-autores)
 
 # :computer: Tecnologias
