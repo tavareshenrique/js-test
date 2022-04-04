@@ -2,7 +2,7 @@
    <img src="https://raw.githubusercontent.com/tavareshenrique/js-ts-tests/main/assets/icon.png" alt="Frasco de Teste" width="140"/>
 </p>
 
-> O <b>módulo 3</b> utilizando <b>ReactJS com NextJS</b>, onde utilizamos <b>React Testing Library</b> e <b>Jest</b> para testar a aplicação.
+> No <b>módulo 3</b> utilizamos <b>ReactJS com NextJS</b> como lib e framework Front-End, e utilizamos a <b>React Testing Library</b> e o <b>Jest</b> para testar a aplicação.
 
 # :pushpin: Conteúdo
 
